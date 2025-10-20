@@ -82,7 +82,7 @@ pip install pandas
 1. Place microfilm.xml and template.csv in the same directory as the script.
 2. Run the script:
 ```python
-python microfilm_migration.py
+python db_migration.py
 ```
 3. The script will create output.csv in the same directory and print a summary message to the console, e.g.:
 ```python
