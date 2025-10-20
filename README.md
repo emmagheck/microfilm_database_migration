@@ -44,3 +44,18 @@ File paths are defined at the top of the script:
 xml_file = "microfilm.xml"
 template_csv = "template.csv"
 output_csv = "output.csv"
+
+| Source Field (Access XML) | ArchivesSpace Field                                                   | Transformation / Logic                                                   |
+| ------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `ACCESSNUM`               | *(filter)*                                                            | Only include records where `ACCESSNUM = "MFO"`                           |
+| `MFNUMBER`                | `accession_number_1`                                                  | Direct copy                                                              |
+| `COLLECTION`              | `accession_title`                                                     | Direct copy                                                              |
+| `REELS`                   | `extent_number`                                                       | Direct copy                                                              |
+| `SIZE`                    | `extent_type`, `extent_container_summary`                             | `35` → “microfilm reel(s)”, “35 mm”; `16` → “microfilm reel(s)”, “16 mm” |
+| `RESTRICTED`              | `accession_access_restrictions`, `accession_access_restrictions_note` | Blank = `0`; `Y` = `1` and note added                                    |
+| `NEGATIVE`                | `accession_content_description`                                       | `Y` → “Negatives”                                                        |
+| `TARGETBY`, `CATALOG`     | `accession_general_note`                                              | Appends “Processed by…” or “Cataloged by…”                               |
+| `THS`                     | `accession_provenance`                                                | `Y` → “Acquired from THS.”                                               |
+| `ACQUIS`                  | `accession_acquisition_type`                                          | `L` = Loan; `P` = Purchase; `O` = Originals                              |
+| `DATE_ASSIGNED`           | `date_1_begin`, `date_1_type`                                         | Converts to ISO format; type = “single”                                  |
+
