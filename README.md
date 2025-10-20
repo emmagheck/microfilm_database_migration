@@ -1,6 +1,4 @@
-# Microfilm Accession Record Database Migration
-## ArchivesSpace Metadata Cleanup Project
-This respository is part of Phase 2 of TSLA's ArchivesSpace Metadata Cleanup Project. The Tennessee State Library and Archives has historically stored microfilm accession records in a Microsoft Access Database, but needed to migrate them to ArchivesSpace as part of the  metadata cleanup. This code shows the process of migrating records from XML to CSV format.
+# Microfilm Accessions Migration Script
+This Python script migrates microfilm-only accession records from a Microsoft Access export (in XML format) to a CSV file formatted for import into ArchivesSpace.
+It filters and transforms relevant data fields from the XML export, applies consistent data mapping and formatting, and outputs a ready-to-import CSV using a provided ArchivesSpace CSV template.
 
-## ArchivesSpace Requirements
-ArchivesSpace provides Bulk Import spreadsheets for users, so rather than creating an accession record for all 1475 records, we are able to upload them all at once. However, 
