@@ -5,7 +5,7 @@ import pandas as pd
 # Configuration
 xml_file = "microfilm.xml"
 template_csv = "template.csv"
-output_csv = "output.csv"
+output_csv = "output_filled.csv"
 
 # Parse XML
 tree = ET.parse(xml_file)
@@ -44,11 +44,17 @@ for record in root.findall("Microfilm_x0020_List"):
 
     # get values from TARGETBY
     if fields.get("TARGETBY"):
-        data["accession_general_note"] = append_value(data.get("accession_general_note"), f"Processed by {fields['TARGETBY']}.")
+        data["accession_processors"] = append_value(data.get("accession_processors"), f"Processed by {fields['TARGETBY']}.")
+
+    # get values from NOTES
+    if fields.get("NOTES"):
+        data["accession_provenance"] = append_value(data.get("accession_provenance"), fields["NOTES"])
 
     # get values from CATALOG
-    if fields.get("CATALOG"):
-        data["accession_general_note"] = append_value(data.get("accession_general_note"), f"Cataloged by {fields['CATALOG']}.")
+    if fields.get("CATALOG") == "YES":
+        data["accession_cataloged"] = "1"
+    elif fields.get("CATALOG") == "NO":
+        data["accession_cataloged"] = "0"
 
     # get values from THS
     if fields.get("THS") == "Y":
@@ -76,11 +82,14 @@ for record in root.findall("Microfilm_x0020_List"):
 
     # get values from RESTRICTED
     restricted_value = fields.get("RESTRICTED", "").strip()
-    if restricted_value == "":
-        data["accession_access_restrictions"] = "0"
+    if restricted_value == "N":
+        data["accession_restrictions_apply"] = "0"
     elif restricted_value == "Y":
-        data["accession_access_restrictions"] = "1"
+        data["accession_restrictions_apply"] = "1"
         data["accession_access_restrictions_note"] = "Some materials in this accession are restricted."
+    elif restricted_value == "":
+        data["accession_restrictions_apply"] = "0"
+
 
     # get values from DATE_ASSIGNED
     if fields.get("DATE_ASSIGNED"):
@@ -91,11 +100,26 @@ for record in root.findall("Microfilm_x0020_List"):
     # Direct mappings
     if fields.get("COLLECTION"):
         data["accession_title"] = fields["COLLECTION"]
+        title_lower = fields["COLLECTION"].lower()
+        if "papers" in title_lower:
+            data["accession_resource_type"] = "papers"
+        elif "records" in title_lower:
+            data["accession_resource_type"] = "records"
+        elif "collection" in title_lower:
+            data["accession_resource_type"] = "collection"
+        else:
+            data["accession_resource_type"] = "collection"
     if fields.get("MFNUMBER"):
-        data["accession_number_1"] = fields["MFNUMBER"]
+        data["accession_number_1"] = "MF. " + str(fields["MFNUMBER"])
     if fields.get("REELS"):
         data["extent_number"] = fields["REELS"]
 
+    # Set default values for language, script, and date 1 label
+    data["accession_language"] = "eng"
+    data["accession_script"] = "Latn"
+    data["lang_material_language"] = "eng"
+    data["lang_material_script"] = "Latn"
+    data["date_1_label"] = "Targeted"
 
     # Fill missing template fields with blanks
     row = {col: data.get(col, "") for col in fieldnames}
