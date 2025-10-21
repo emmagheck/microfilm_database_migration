@@ -6,7 +6,7 @@ import re
 # Configuration
 xml_file = "microfilm.xml"
 template_csv = "template.csv"
-output_csv = "output.csv"
+output_csv = "output_filled.csv"
 
 # Parse XML
 tree = ET.parse(xml_file)
@@ -45,13 +45,14 @@ for record in root.findall("Microfilm_x0020_List"):
     # TARGETBY
     if fields.get("TARGETBY"):
         data["accession_processors"] = append_value(
-            data.get("accession_processors"), fields["TARGETBY"]
+            data.get("accession_processors"), f"Processed by {fields['TARGETBY']}."
         )
 
     # CATALOG
-    if fields.get("CATALOGED_x003F_") == "YES":
+    catalog_value = fields.get("CATALOG", "").strip().upper()
+    if catalog_value == "YES":
         data["accession_cataloged"] = "1"
-    elif fields.get("CATALOGED_x003F_") == "NO":
+    elif catalog_value == "NO":
         data["accession_cataloged"] = "0"
 
     # NOTES
@@ -59,7 +60,6 @@ for record in root.findall("Microfilm_x0020_List"):
         data["accession_provenance"] = append_value(
             data.get("accession_provenance"), fields["NOTES"]
         )
-
 
     # THS
     if fields.get("THS") == "Y":
@@ -104,6 +104,7 @@ for record in root.findall("Microfilm_x0020_List"):
         date_clean = fields["DATE_ASSIGNED"].split("T")[0]
         data["date_1_begin"] = date_clean
         data["date_1_type"] = "single"
+        data["date_1_label"] = "Targeted"
 
     # COLLECTION logic
     if fields.get("COLLECTION"):
@@ -120,8 +121,7 @@ for record in root.findall("Microfilm_x0020_List"):
         else:
             data["accession_resource_type"] = "collection"
 
-        # extract dates from COLLECTION tags
-        # Remove approximate date prefixes like ca., circa, c.
+        # Remove ca./circa/c.
         cleaned_title = re.sub(r"\b(?:ca\.?|circa|c\.)\s*", "", collection_value, flags=re.IGNORECASE)
 
         # Extract year patterns
@@ -145,12 +145,11 @@ for record in root.findall("Microfilm_x0020_List"):
     if fields.get("REELS"):
         data["extent_number"] = fields["REELS"]
 
-    # Default values
+    # Default values (only add date_1_label if date_1_begin exists)
     data["accession_language"] = "eng"
     data["accession_script"] = "Latn"
     data["lang_material_language"] = "eng"
     data["lang_material_script"] = "Latn"
-    data["date_1_label"] = "Targeted"
 
     # Fill missing template fields with blanks
     row = {col: data.get(col, "") for col in fieldnames}
@@ -169,4 +168,3 @@ if "date_1_begin" in df.columns:
 df.to_csv(output_csv, index=False, encoding="utf-8-sig")
 
 print(f"✅ Done! Wrote {len(df)} rows to {output_csv}")
-
