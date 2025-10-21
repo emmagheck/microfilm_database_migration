@@ -131,6 +131,7 @@ It automatically maps XML fields to ArchivesSpace CSV fields, applies conditiona
 | `RESTRICTED` | `accession_restrictions_apply`, `accession_access_restrictions_note` | `"Y"` → restricted note, `"N"` or blank → unrestricted |
 | `DATE_ASSIGNED` | `date_1_begin`, `date_1_type`, `date_1_label` | Reformatted to `yyyy-mm-dd`, type = `"single"`, label = `"Targeted"` |
 | `COLLECTION` | `accession_title` | Directly mapped |
+| `COLLECTION` | `date_2_begin`, `date_2_end`, 'date_2_label' | Extracts collection dates from collection title |
 | *(analyzed from title)* | `accession_resource_type` | `"papers"`, `"records"`, `"collection"` keyword detection; default = `"collection"` |
 | `MFNUMBER` | `accession_number_1` | Prepends `"MF. "` |
 | `REELS` | `extent_number` | Direct mapping |
