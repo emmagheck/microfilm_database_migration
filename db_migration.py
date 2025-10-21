@@ -45,8 +45,14 @@ for record in root.findall("Microfilm_x0020_List"):
     # TARGETBY
     if fields.get("TARGETBY"):
         data["accession_processors"] = append_value(
-            data.get("accession_processors"), f"Processed by {fields['TARGETBY']}."
+            data.get("accession_processors"), fields["TARGETBY"]
         )
+
+    # CATALOG
+    if fields.get("CATALOGED_x003F_") == "YES":
+        data["accession_cataloged"] = "1"
+    elif fields.get("CATALOGED_x003F_") == "NO":
+        data["accession_cataloged"] = "0"
 
     # NOTES
     if fields.get("NOTES"):
@@ -54,11 +60,6 @@ for record in root.findall("Microfilm_x0020_List"):
             data.get("accession_provenance"), fields["NOTES"]
         )
 
-    # CATALOGED_x003F_
-    if fields.get("CATALOGED_x003F_") == "YES":
-        data["accession_cataloged"] = "1"
-    elif fields.get("CATALOGED_x003F_") == "NO":
-        data["accession_cataloged"] = "0"
 
     # THS
     if fields.get("THS") == "Y":
@@ -168,4 +169,3 @@ if "date_1_begin" in df.columns:
 df.to_csv(output_csv, index=False, encoding="utf-8-sig")
 
 print(f"✅ Done! Wrote {len(df)} rows to {output_csv}")
-
