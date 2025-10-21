@@ -21,9 +21,9 @@ It automatically maps XML fields to ArchivesSpace CSV fields, applies conditiona
 
 | XML Field | CSV Field | Logic |
 |------------|------------|-------|
-| `ACCESSNUM` | Used to filter only records with value `"MFO"` |
+| `ACCESSNUM` | Used to filter only records with value `"MFO"` | Extract data only from microfilm only (MFO) collections |
 | `NEGATIVE` | `accession_content_description` | `"Y"` → `"Negatives"` |
-| `TARGETBY` | `accession_processors` | Adds `"Processed by <TARGETBY>."` |
+| `TARGETBY` | `accession_processors` |
 | `NOTES` | `accession_provenance` | Appended to provenance |
 | `CATALOGED_x003F_` | `accession_cataloged` | `"YES"` → `1`, `"NO"` → `0` |
 | `THS` | `accession_provenance` | `"Y"` → `"Acquired from THS."` |
