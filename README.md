@@ -17,7 +17,7 @@ It automatically maps XML fields to ArchivesSpace CSV fields, applies conditiona
 
 ---
 
-## 🧩 Field Mapping Summary
+## 🧩 Field Mapping Summary / Metadata Application Profile
 
 | XML Field | CSV Field | Logic |
 |------------|------------|-------|
