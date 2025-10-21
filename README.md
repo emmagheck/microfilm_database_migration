@@ -25,7 +25,7 @@ It automatically maps XML fields to ArchivesSpace CSV fields, applies conditiona
 | `NEGATIVE` | `accession_content_description` | `"Y"` → `"Negatives"` |
 | `TARGETBY` | `accession_processors` | Adds `"Processed by <TARGETBY>."` |
 | `NOTES` | `accession_provenance` | Appended to provenance |
-| `CATALOG` | `accession_cataloged` | `"YES"` → `1`, `"NO"` → `0` |
+| `CATALOGED_x003F_` | `accession_cataloged` | `"YES"` → `1`, `"NO"` → `0` |
 | `THS` | `accession_provenance` | `"Y"` → `"Acquired from THS."` |
 | `ACQUIS` | `accession_acquisition_type` | `"L"` → Loan, `"P"` → Purchase, `"O"` → Originals |
 | `SIZE` | `extent_type`, `extent_container_summary` | `"35"` → `35 mm`, `"16"` → `16 mm`, default = `"microfilm reel(s)"` |
