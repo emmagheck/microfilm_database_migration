@@ -54,10 +54,10 @@ for record in root.findall("Microfilm_x0020_List"):
             data.get("accession_provenance"), fields["NOTES"]
         )
 
-    # CATALOG
-    if fields.get("CATALOG") == "YES":
+    # CATALOGED_x003F_
+    if fields.get("CATALOGED_x003F_") == "YES":
         data["accession_cataloged"] = "1"
-    elif fields.get("CATALOG") == "NO":
+    elif fields.get("CATALOGED_x003F_") == "NO":
         data["accession_cataloged"] = "0"
 
     # THS
@@ -168,3 +168,4 @@ if "date_1_begin" in df.columns:
 df.to_csv(output_csv, index=False, encoding="utf-8-sig")
 
 print(f"✅ Done! Wrote {len(df)} rows to {output_csv}")
+
