@@ -6,7 +6,7 @@ import re
 # Configuration
 xml_file = "microfilm.xml"
 template_csv = "template.csv"
-output_csv = "output_filled.csv"
+output_csv = "output.csv"
 
 # Parse XML
 tree = ET.parse(xml_file)
@@ -169,3 +169,4 @@ if "date_1_begin" in df.columns:
 df.to_csv(output_csv, index=False, encoding="utf-8-sig")
 
 print(f"✅ Done! Wrote {len(df)} rows to {output_csv}")
+
