@@ -59,7 +59,7 @@ They are automatically converted to ISO `yyyy-mm-dd` format using `pandas`.
 ## 📂 File Inputs & Outputs
 **Inputs**
 - `microfilm.xml` → The XML source file.
-- `template.csv` → A CSV template containing the expected ArchivesSpace headers.
+- `template.csv` → The ArchivesSpace bulk accession import template (ArchivesSpace users can download the CSV template by clicking on the dropdown menu with the gear icon and navigating to Bulk Import Templates)
 
 **Output**
 - `output.csv` → A fully populated, UTF-8 encoded CSV ready for import.
