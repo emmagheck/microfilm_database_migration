@@ -67,13 +67,13 @@ They are automatically converted to ISO `yyyy-mm-dd` format using `pandas`.
 ---
 
 ## 🧾 Notes
+The script only works as well as your data is cleaned. If your institution has not stored data in a standardized format, parts of the spreadsheet may have to be completed by hand (For example, in my case, our institution included the microfilm reel count for most of the collections, but not all. I had to go to the microfilm room and count the number of reels for the ~10 collections that were missing that information).
 * The script assumes the XML export uses consistent element names.
 * Missing fields are filled with blanks to preserve CSV structure.
 * The resulting CSV can be validated or modified in Excel before importing into ArchivesSpace.
 * If you need to adapt this for non-microfilm only accessions, adjust the filter condition (ACCESSNUM = "MFO") in the code.
 * If DATE_ASSIGNED is missing, the record will still be included (without date fields).
 * Dates that cannot be parsed will appear as blank.
-
 ---
 
 ## 🚀 How to Run
