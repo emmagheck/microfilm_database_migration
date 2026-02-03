@@ -1,4 +1,4 @@
-# 🎞️ Microfilm XML to ArchivesSpace CSV Converter
+# 🎞️ XML to ArchivesSpace CSV Converter
 
 ## 📘 Overview
 This Python script parses a Microsoft Access **XML export** containing microfilm accession records, and transforms it into a **CSV file** formatted for **ArchivesSpace bulk accessions**.  
